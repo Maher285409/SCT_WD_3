@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Go</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="petals-container" id="petals"></div>
+
+    <button
+      class="theme-toggle"
+      id="themeToggle"
+      onclick="toggleTheme()"
+      aria-label="Toggle theme"
+    >
+      <span id="themeIcon">🌙</span>
+    </button>
+
+    <!-- ═══════════════════════════════════════
+       1. LANDING
+  ═══════════════════════════════════════ -->
+    <div id="landing" class="screen active">
+      <div class="land-header">
+        <h1 class="land-title">Tic‑Tac‑<span>Go</span></h1>
+        <p class="land-tagline">The classic game, beautifully reimagined</p>
+      </div>
+
+      <!-- Desktop two-col wrapper; on mobile these children just stack -->
+      <div class="landing-cols">
+        <div class="land-hero-card">
+          <div class="hero-board" id="heroBoardEl"></div>
+          <p class="hero-hint">4 × 4 grid · Get 3 in a row to win</p>
+        </div>
+        <div>
+          <div class="stats-row">
+            <div class="stat-card">
+              <span class="stat-num">4×4</span
+              ><span class="stat-label">Grid</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">2</span
+              ><span class="stat-label">Modes</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">∞</span
+              ><span class="stat-label">Rounds</span>
+            </div>
+          </div>
+          <div class="features-grid">
+            <div class="feat-card">
+              <div class="feat-icon">🤖</div>
+              <div class="feat-title">Smart AI</div>
+              <div class="feat-desc">Blocks, attacks, adapts</div>
+            </div>
+            <div class="feat-card">
+              <div class="feat-icon">↩</div>
+              <div class="feat-title">Undo Move</div>
+              <div class="feat-desc">Take back any mistake</div>
+            </div>
+            <div class="feat-card">
+              <div class="feat-icon">🏆</div>
+              <div class="feat-title">Scoreboard</div>
+              <div class="feat-desc">Track wins per session</div>
+            </div>
+            <div class="feat-card">
+              <div class="feat-icon">🌸</div>
+              <div class="feat-title">Dark Mode</div>
+              <div class="feat-desc">Easy on the eyes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="showScreen('tutorial')">
+        Start Playing →
+      </button>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+       2. TUTORIAL
+  ═══════════════════════════════════════ -->
+    <div id="tutorial" class="screen">
+      <div class="card">
+        <h2 class="card-title">How to Play</h2>
+        <p class="card-sub">Master the rules in seconds</p>
+        <div class="tut-rule">
+          <div class="tut-num">1</div>
+          <p>Players take turns placing their symbol on the 4×4 grid</p>
+        </div>
+        <div class="tut-rule">
+          <div class="tut-num">2</div>
+          <p>
+            First to line up <strong>3 symbols</strong> in a row, column, or
+            diagonal wins
+          </p>
+        </div>
+        <div class="tut-rule">
+          <div class="tut-num">3</div>
+          <p>Block your opponent before they connect three!</p>
+        </div>
+        <div class="mini-score-row">
+          <div class="mini-side">
+            <div class="mini-icons">
+              <div class="mini-o"></div>
+              <div class="mini-o"></div>
+              <div class="mini-o"></div>
+            </div>
+            <span class="mini-label">Wins</span>
+          </div>
+          <div class="mini-divider"></div>
+          <div class="mini-side">
+            <div class="mini-icons">
+              <div class="mini-x"></div>
+              <div class="mini-x"></div>
+              <div class="mini-x"></div>
+            </div>
+            <span class="mini-label">Losses</span>
+          </div>
+        </div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-primary" onclick="showScreen('mode')">
+          Continue →
+        </button>
+        <button class="btn-secondary" onclick="showScreen('landing')">
+          ← Back
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+       3. MODE SELECTION
+  ═══════════════════════════════════════ -->
+    <div id="mode" class="screen">
+      <div class="card">
+        <h2 class="card-title">Select Mode</h2>
+        <p class="card-sub">How do you want to play?</p>
+        <div
+          class="mode-card"
+          id="mc-human"
+          onclick="chooseMode('human', this)"
+        >
+          <div class="mode-icon">👥</div>
+          <div class="mode-info">
+            <h3>Human vs Human</h3>
+            <p>Pass and play with a friend</p>
+          </div>
+          <div class="mode-check" id="check-human"></div>
+        </div>
+        <div class="mode-card" id="mc-ai" onclick="chooseMode('ai', this)">
+          <div class="mode-icon">🤖</div>
+          <div class="mode-info">
+            <h3>Human vs AI</h3>
+            <p>Challenge a smart opponent</p>
+          </div>
+          <div class="mode-check" id="check-ai"></div>
+        </div>
+        <button id="playBtn" onclick="startGame()" disabled>
+          Choose a mode first
+        </button>
+      </div>
+      <div class="nav-row">
+        <button class="btn-secondary" onclick="showScreen('tutorial')">
+          ← Back
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+       4. GAME SCREEN
+  ═══════════════════════════════════════ -->
+    <div id="game" class="screen">
+      <div class="game-topbar">
+        <div class="game-logo">Tic‑Tac‑<span>Go</span></div>
+        <button
+          class="btn-topbar"
+          onclick="showScreen('landing'); resetGame();"
+        >
+          Home
+        </button>
+      </div>
+
+      <!--
+      .game-arena: on mobile this is just a normal div (single column).
+      On desktop CSS turns it into a flex row:
+        [player-side-card] [game-board-wrap] [player-side-card]
+    -->
+      <div class="game-arena">
+        <!-- LEFT player card (desktop only visible as side panel) -->
+        <div class="player-side-card" id="sideCardO">
+          <div class="psc-avatar">🙂</div>
+          <div class="psc-name">Player O</div>
+          <div class="psc-sym-badge">O</div>
+          <div class="psc-wins" id="sideWinsO">Win Rounds: 0</div>
+        </div>
+
+        <!-- CENTRE: the actual board card -->
+        <div class="game-board-wrap">
+          <div class="card game-card">
+            <div class="win-overlay" id="winOverlay">
+              <div class="win-badge" id="winBadge">Round Over</div>
+              <div class="win-msg" id="winMsg">🎉 O Wins!</div>
+              <div class="win-sub" id="winSub">Great match!</div>
+              <div class="win-btns">
+                <button class="btn-win" onclick="resetGame()">
+                  Play Again
+                </button>
+                <button class="btn-win-out" onclick="showScreen('mode')">
+                  Menu
+                </button>
+              </div>
+            </div>
+
+            <!-- Score bar (mobile only — hidden on desktop via CSS) -->
+            <div class="score-bar">
+              <div class="score-side">
+                <div class="score-icons" id="winsEl">
+                  <div class="sc-o"></div>
+                  <div class="sc-o"></div>
+                  <div class="sc-o"></div>
+                </div>
+                <span class="sc-label">Wins</span>
+              </div>
+              <div class="sc-divider"></div>
+              <div class="score-side">
+                <div class="score-icons" id="lossEl">
+                  <div class="sc-x"></div>
+                  <div class="sc-x"></div>
+                  <div class="sc-x"></div>
+                </div>
+                <span class="sc-label">Losses</span>
+              </div>
+            </div>
+
+            <!-- Player chips (mobile only — hidden on desktop via CSS) -->
+            <div class="player-chips">
+              <div class="chip active" id="chipO">
+                <div class="chip-sym o-sym"></div>
+                <span class="chip-name">Player O</span>
+              </div>
+              <div class="chip" id="chipX">
+                <div class="chip-sym x-sym"></div>
+                <span class="chip-name">Player X</span>
+              </div>
+            </div>
+
+            <div class="status-bar" id="statusBar">Player O's Turn</div>
+            <div class="game-board" id="gameBoard"></div>
+
+            <div class="controls">
+              <button class="ctrl-btn" onclick="undoMove()">
+                <span class="ctrl-icon">↩</span
+                ><span class="ctrl-label">Undo</span>
+              </button>
+              <button class="ctrl-btn" onclick="resetGame()">
+                <span class="ctrl-icon">↺</span
+                ><span class="ctrl-label">Reset</span>
+              </button>
+              <button class="ctrl-btn" onclick="skipTurn()">
+                <span class="ctrl-icon">⏭</span
+                ><span class="ctrl-label">Skip</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- /game-board-wrap -->
+
+        <!-- RIGHT player card (desktop only) -->
+        <div class="player-side-card" id="sideCardX">
+          <div class="psc-avatar">😈</div>
+          <div class="psc-name" id="sideNameX">Player X</div>
+          <div class="psc-sym-badge">X</div>
+          <div class="psc-wins" id="sideWinsX">Win Rounds: 0</div>
+        </div>
+      </div>
+      <!-- /game-arena -->
+    </div>
+    <!-- /game screen -->
+
+    <script src="script.js"></script>
+
+    <!-- Patch: keep side cards in sync with game state -->
+    <script>
+      // Extend existing functions to also update side cards
+      const _origEndGame = window.endGame;
+      // We patch after script.js loads so we hook cleanly
+      document.addEventListener("DOMContentLoaded", () => {
+        patchForDesktop();
+      });
+
+      function patchForDesktop() {
+        // Update side card active states on chip update
+        const origUpdateChips = window.updateChips;
+        window.updateChips = function () {
+          origUpdateChips && origUpdateChips();
+          const isO = window.current === "O";
+          const sO = document.getElementById("sideCardO");
+          const sX = document.getElementById("sideCardX");
+          if (sO) sO.classList.toggle("active-player", isO);
+          if (sX) sX.classList.toggle("active-player", !isO);
+        };
+
+        // Update win counts in side cards
+        const origUpdateScores = window.updateScores;
+        window.updateScores = function () {
+          origUpdateScores && origUpdateScores();
+          const wO = document.getElementById("sideWinsO");
+          const wX = document.getElementById("sideWinsX");
+          if (wO) wO.textContent = "Win Rounds: " + (window.wins || 0);
+          if (wX) wX.textContent = "Win Rounds: " + (window.losses || 0);
+        };
+
+        // Update AI label in side card
+        const origStartGame = window.startGame;
+        window.startGame = function () {
+          origStartGame && origStartGame();
+          const nameX = document.getElementById("sideNameX");
+          if (nameX)
+            nameX.textContent =
+              window.gameMode === "ai" ? "AI Bot" : "Player X";
+          // init active state
+          const sO = document.getElementById("sideCardO");
+          const sX = document.getElementById("sideCardX");
+          if (sO) sO.classList.add("active-player");
+          if (sX) sX.classList.remove("active-player");
+        };
+      }
+    </script>
+  </body>
+</html>
