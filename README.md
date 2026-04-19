@@ -42,12 +42,4 @@ The goal of this project is to understand DOM manipulation, event handling, and 
 
 ---
 
-## 📷 Preview
 
-(Add a screenshot here if you want)
-
----
-
-## 🔗 Live Demo
-
-(Add your GitHub Pages link here if deployed)
