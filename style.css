@@ -436,6 +436,13 @@ body {
 /* ── 1100px+: give a touch more breathing room ── */
 @media (min-width: 1100px) {
   #landing { width: 780px; }
-  .game-board-wrap { width: 400px; }
+  .game-board-wrap { width: 600px; }
   .player-side-card { width: 162px; }
+}
+
+/* HIDE bottom player columns on mobile */
+@media (max-width: 767px) {
+  .player-side-card {
+    display: none !important;
+  }
 }
