@@ -436,7 +436,7 @@ body {
 /* ── 1100px+: give a touch more breathing room ── */
 @media (min-width: 1100px) {
   #landing { width: 780px; }
-  .game-board-wrap { width: 600px; }
+  .game-board-wrap { width: 400px; }
   .player-side-card { width: 162px; }
 }
 
